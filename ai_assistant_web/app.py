@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 # 🔑 API KEY
-API_KEY = "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"
+API_KEY = "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"
 
 # -------- PAGE CONFIG --------
 st.set_page_config(page_title="AI Assistant Pro", layout="wide")
