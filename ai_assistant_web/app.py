@@ -1,9 +1,8 @@
 import streamlit as st
 import requests
 
-# 🔑 API KEY
-import os
-API_KEY = os.getenv("API_KEY")
+# 🔑 API KEY (from Streamlit Secrets)
+API_KEY = st.secrets["API_KEY"]
 
 # -------- PAGE CONFIG --------
 st.set_page_config(page_title="AI Assistant Pro", layout="wide")
@@ -23,7 +22,7 @@ with st.sidebar:
         st.session_state.messages = []
 
     if st.button("🆕 New Chat"):
-        st.session_state.history.append(st.session_state.messages)
+        st.session_state.history.append(st.session_state.messages.copy())
         st.session_state.messages = []
 
     st.markdown("---")
@@ -41,7 +40,7 @@ for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
-# -------- FUNCTION --------
+# -------- AI FUNCTION --------
 def get_ai_response(text):
     try:
         response = requests.post(
@@ -51,16 +50,21 @@ def get_ai_response(text):
                 "Content-Type": "application/json"
             },
             json={
-                "model": "openai/gpt-3.5-turbo",
+                "model": "openrouter/auto",  # best auto model
                 "messages": [{"role": "user", "content": text}]
             }
         )
 
         result = response.json()
-        return result["choices"][0]["message"]["content"]
 
-    except:
-        return "AI error, try again."
+        # ✅ Safe response handling
+        if "choices" in result:
+            return result["choices"][0]["message"]["content"]
+        else:
+            return f"⚠️ API Error: {result}"
+
+    except Exception as e:
+        return f"⚠️ Error: {e}"
 
 # -------- INPUT --------
 user_input = st.chat_input("💬 Ask anything...")
