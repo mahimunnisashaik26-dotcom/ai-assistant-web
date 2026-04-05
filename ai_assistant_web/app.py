@@ -3,7 +3,7 @@ import requests
 
 # 🔑 API KEY
 import os
-API_KEY = os.getenv("API_KEY="sk-or-v1-xxxxxxxx"")
+API_KEY = os.getenv("API_KEY")
 
 # -------- PAGE CONFIG --------
 st.set_page_config(page_title="AI Assistant Pro", layout="wide")
