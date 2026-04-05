@@ -1,4 +1,3 @@
-import webbrowser
 import datetime
 
 def process_command(text):
@@ -8,16 +7,13 @@ def process_command(text):
         return "Hello! How can I help you?"
 
     elif "open youtube" in text:
-        webbrowser.open("https://youtube.com")
-        return "Opening YouTube"
+        return "Click here to open YouTube: https://youtube.com"
 
     elif "open google" in text:
-        webbrowser.open("https://google.com")
-        return "Opening Google"
+        return "Click here to open Google: https://google.com"
 
     elif "open whatsapp" in text:
-        webbrowser.open("https://web.whatsapp.com")
-        return "Opening WhatsApp"
+        return "Click here to open WhatsApp: https://web.whatsapp.com"
 
     elif "time" in text:
         now = datetime.datetime.now().strftime("%H:%M")
